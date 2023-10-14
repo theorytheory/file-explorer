@@ -19,3 +19,9 @@ code {
 body > #root > div {
   height: 100vh;
 }
+
+.modal-container {
+  @apply flex flex-col justify-between;
+  @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  @apply bg-white w-[480px] min-h-[280px] max-h-[360px] px-5 py-4 h-full;
+}
