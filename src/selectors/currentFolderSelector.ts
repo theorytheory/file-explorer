@@ -9,7 +9,7 @@ const currentFolderSelector = selector({
     const fileSystemRoot = get(fileSystemState);
     const currentLocation = get(locationState);
 
-    return getCurrentFolder(fileSystemRoot, currentLocation);
+    return getCurrentFolder(fileSystemRoot, currentLocation.reference);
   },
 });
 

@@ -1,8 +1,12 @@
 import { atom } from "recoil";
-import { File, Folder } from "../types/fileSystem";
+import { recoilPersist } from "recoil-persist";
+import { Folder } from "../types/fileSystem";
 
-const fileSystemState = atom<File | Folder>({
+const { persistAtom } = recoilPersist({ key: "fileSystemState" });
+
+const fileSystemState = atom<Folder>({
   key: "fileSystemState",
+  effects_UNSTABLE: [persistAtom],
   default: {
     name: "Home",
     children: [
@@ -22,7 +26,7 @@ const fileSystemState = atom<File | Folder>({
               },
               {
                 name: "Text File 1",
-                content: "pppp",
+                content: "eeee",
               },
             ],
           },

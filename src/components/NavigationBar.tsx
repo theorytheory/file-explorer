@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import Button from "@mui/material/Button";
 import locationState from "../atoms/locationState";
 import locationHistoryState from "../atoms/locationHistoryState";

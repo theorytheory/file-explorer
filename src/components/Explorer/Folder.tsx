@@ -1,24 +1,46 @@
 import FolderOpenOutlinedIcon from "@mui/icons-material/FolderOpenOutlined";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import locationState from "../../atoms/locationState";
 import locationHistoryState from "../../atoms/locationHistoryState";
+import { Folder as FolderType } from "../../types/fileSystem";
+import isEmpty from "lodash/isEmpty";
+import searchState from "../../atoms/searchState";
+import getCurrentFolder from "../../utils/getCurrentFolder";
+import fileSystemState from "../../atoms/fileSystemState";
+import getPath from "../../utils/getPath";
 
 interface IFolder {
-  name: string;
+  folder: FolderType;
   index: number;
   className?: string;
 }
 
-function Folder({ className, name, index }: IFolder) {
+function Folder({ className, folder, index }: IFolder) {
   const [location, setLocation] = useRecoilState(locationState);
   const setLocationHistory = useSetRecoilState(locationHistoryState);
 
+  const [searchString, setSearchString] = useRecoilState(searchState);
+  const searching = !isEmpty(searchString);
+  const fileSystemRoot = useRecoilValue(fileSystemState);
+
   const goToLocation = () => {
-    setLocation((l) => ({
-      path: [...l.path, name],
-      reference: [...l.reference, index],
-    }));
-    setLocationHistory((lh) => [...lh, location]);
+    if (searching) {
+      const path = getPath(fileSystemRoot, folder.reference!);
+      const newLocation = {
+        path: path,
+        reference: folder.reference!,
+      };
+
+      setLocation(newLocation);
+      setLocationHistory((lh) => [...lh, newLocation]);
+      setSearchString("");
+    } else {
+      setLocation((l) => ({
+        path: [...l.path, folder.name],
+        reference: [...l.reference, index],
+      }));
+      setLocationHistory((lh) => [...lh, location]);
+    }
   };
 
   return (
@@ -30,7 +52,7 @@ function Folder({ className, name, index }: IFolder) {
       >
         <FolderOpenOutlinedIcon sx={{ fontSize: 64 }} />
       </div>
-      <div className="flex justify-center text-sm">{name}</div>
+      <div className="flex justify-center text-sm">{folder.name}</div>
     </div>
   );
 }

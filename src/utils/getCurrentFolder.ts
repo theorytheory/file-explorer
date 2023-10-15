@@ -3,9 +3,8 @@ import { Location } from "../types/location";
 
 function getCurrentFolder(
   fileSystemRoot: File | Folder,
-  currentLocation: Location
+  reference: Array<number>
 ) {
-  const { reference } = currentLocation;
   let dir = fileSystemRoot;
 
   reference.slice(1).forEach((ref) => {

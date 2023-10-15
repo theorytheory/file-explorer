@@ -11,7 +11,10 @@ const currentFolderSummarySelector = selector({
     const fileSystemRoot = get(fileSystemState);
     const currentLocation = get(locationState);
 
-    const currentFolder = getCurrentFolder(fileSystemRoot, currentLocation);
+    const currentFolder = getCurrentFolder(
+      fileSystemRoot,
+      currentLocation.reference
+    );
     let fileCounter = 0;
     let folderCounter = 0;
     const stack = [...currentFolder.children];

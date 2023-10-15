@@ -41,10 +41,12 @@ function CreateNewFileModal({ open, handleClose }: ICreateNewFileModal) {
       const fileSystemCopy = structuredClone(fileSystem);
       const currentFolderCopy = getCurrentFolder(
         fileSystemCopy,
-        currentLocation
+        currentLocation.reference
       );
       currentFolderCopy.children = [...currentFolderCopy.children, file];
       setFileSystem(fileSystemCopy);
+      setFilename("");
+      setContent("");
       handleClose();
     }
   };

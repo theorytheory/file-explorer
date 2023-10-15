@@ -6,6 +6,7 @@ export interface File {
 export interface Folder {
   name: string;
   children: Array<File | Folder>;
+  reference?: Array<number>;
 }
 
 export function isAFile(f: File | Folder): f is File {
