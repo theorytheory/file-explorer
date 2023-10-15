@@ -1,9 +1,10 @@
 import classNames from "classnames";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import Button from "@mui/material/Button";
 import locationState from "../atoms/locationState";
 import locationHistoryState from "../atoms/locationHistoryState";
 import isEmpty from "lodash/isEmpty";
+import searchState from "../atoms/searchState";
 
 interface INavigationBar {
   className?: string;
@@ -13,6 +14,8 @@ function NavigationBar({ className }: INavigationBar) {
   const [location, setLocation] = useRecoilState(locationState);
   const [locationHistory, setLocationHistory] =
     useRecoilState(locationHistoryState);
+  const [searchString, setSearchString] = useRecoilState(searchState);
+  const searching = !isEmpty(searchString);
 
   const goToLocation = (toDepth: number) => {
     setLocation((l) => ({
@@ -23,6 +26,7 @@ function NavigationBar({ className }: INavigationBar) {
     if (!isSameLocation) {
       setLocationHistory((lh) => [...lh, location]);
     }
+    setSearchString("");
   };
 
   const goBack = () => {
@@ -62,7 +66,7 @@ function NavigationBar({ className }: INavigationBar) {
         size="small"
         sx={{ textTransform: "capitalize", color: "black" }}
         onClick={goBack}
-        disabled={isEmpty(locationHistory)}
+        disabled={isEmpty(locationHistory) || searching}
       >
         Back
       </Button>

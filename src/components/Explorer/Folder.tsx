@@ -5,7 +5,6 @@ import locationHistoryState from "../../atoms/locationHistoryState";
 import { Folder as FolderType } from "../../types/fileSystem";
 import isEmpty from "lodash/isEmpty";
 import searchState from "../../atoms/searchState";
-import getCurrentFolder from "../../utils/getCurrentFolder";
 import fileSystemState from "../../atoms/fileSystemState";
 import getPath from "../../utils/getPath";
 
@@ -32,7 +31,7 @@ function Folder({ className, folder, index }: IFolder) {
       };
 
       setLocation(newLocation);
-      setLocationHistory((lh) => [...lh, newLocation]);
+      setLocationHistory((lh) => [...lh, location]);
       setSearchString("");
     } else {
       setLocation((l) => ({
